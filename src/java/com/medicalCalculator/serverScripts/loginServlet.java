@@ -44,7 +44,6 @@ public class loginServlet extends HttpServlet {
                 out.println("great");
                 HttpSession session = request.getSession();
                 session.setAttribute("email", email);
-//                response.sendRedirect("/MedicalCalculator/result.jsp");
                 RequestDispatcher rd = request.getRequestDispatcher("userCalculationArea");
                 rd.forward(request, response);
 

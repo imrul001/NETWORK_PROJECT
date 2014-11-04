@@ -147,7 +147,6 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $("#btn-login").on("click", function(){
-                alert("got clicked");
                 var url = "./loginServlet";
                 $.ajax({
                     type: "POST",

@@ -35,7 +35,7 @@ public class userCalculationArea extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         try {
-            if (session != null) {
+            if (session.getAttribute("email") != null) {
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<title>Servlet Calculation</title>");
