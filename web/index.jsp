@@ -5,17 +5,50 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Medical Calculator</title>
         <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <style>
+            .myLoadingImage{
+                position: fixed;
+                width: 100%;
+                left: 0;
+                top: 285px;
+                display: none;
+                z-index: 900000;
+            }
+            .myOverlay{
+                background-color: #f2f2f2;
+                position: absolute;
+                top: -286px;
+                left: 0;
+                width: 100%;
+                opacity: 0.6;
+                z-index: 2000;
+            }
+            .imageForLoading
+            {
+                width: 70px;
+                margin: 0 auto;
+                z-index: 3000;
+                position: relative;
+            }
+        </style>
         <script type="text/javascript" src="js/jquery-1.11.0.js"></script>
         <script type="text/javascript" src="js/jquery.form.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
     </head>
     <body>
+        <div class="myLoadingImage">
+            <div class="myOverlay" style="height: 1519px"></div>
+            <div class="imageForLoading">
+                <img src="<c:url value="/images/ajax-loader.gif"/>" alt="Loading" height="60" />
+            </div>
+        </div>
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
                 <div class="panel panel-info" >
@@ -181,6 +214,12 @@
                     }
                 });
                 return false;
+            });
+            $(document).ajaxStart(function(){
+                $(".myLoadingImage").show();
+            });
+            $(document).ajaxStop(function(){
+                $(".myLoadingImage").hide();
             });
         })
     </script>
