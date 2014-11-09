@@ -11,36 +11,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Medical Calculator</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
-        <style>
-            .myLoadingImage{
-                position: fixed;
-                width: 100%;
-                left: 0;
-                top: 285px;
-                display: none;
-                z-index: 900000;
-            }
-            .myOverlay{
-                background-color: #f2f2f2;
-                position: absolute;
-                top: -286px;
-                left: 0;
-                width: 100%;
-                opacity: 0.6;
-                z-index: 2000;
-            }
-            .imageForLoading
-            {
-                width: 70px;
-                margin: 0 auto;
-                z-index: 3000;
-                position: relative;
-            }
-        </style>
-        <script type="text/javascript" src="js/jquery-1.11.0.js"></script>
-        <script type="text/javascript" src="js/jquery.form.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="<c:url value="css/bootstrap.min.css"/>"/>
+        <link rel="stylesheet" href="<c:url value="css/ajaxOverlayStyle.css"/>"/>
+        <script type="text/javascript" src="<c:url value="js/jquery-1.11.0.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="js/jquery.form.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="js/bootstrap.min.js"/>"></script>
     </head>
     <body>
         <div class="myLoadingImage">
@@ -89,8 +64,8 @@
 
                                 <div class="col-sm-12 controls">
                                     <a id="btn-login" href="#" class="btn btn-success">Login  </a>
-                                    <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
-
+                                    <!--                                    <a id="btn-fblogin" href="#"  class="btn btn-primary">Login with Facebook</a>-->
+                                    <button id="btn-fbsignup" disabled="disabled" type="button" class="btn btn-primary"><i class="icon-facebook"></i>Login with Facebook</button>
                                 </div>
                             </div>
 
@@ -126,35 +101,34 @@
                             <div class="form-group">
                                 <label for="email" class="col-md-3 control-label">Email</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="email" placeholder="Email Address">
+                                    <input type="text" id="signup-email" class="form-control" name="email" placeholder="Email Address">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="firstname" class="col-md-3 control-label">First Name</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                                    <input type="text" id="signup-firstname" class="form-control" name="firstname" placeholder="First Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="lastname" class="col-md-3 control-label">Last Name</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                                    <input type="text" id="signup-lastname" class="form-control" name="lastname" placeholder="Last Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="col-md-3 control-label">Password</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                    <input type="password" id="signup-password" class="form-control" name="password" placeholder="Password">
                                 </div>
                             </div>
-
-                            <!--                            <div class="form-group">
-                                                            <label for="icode" class="col-md-3 control-label">Invitation Code</label>
-                                                            <div class="col-md-9">
-                                                                <input type="text" class="form-control" name="icode" placeholder="">
-                                                            </div>
-                                                        </div>-->
+                            <div class="form-group">
+                                <label for="cpassword" class="col-md-3 control-label">Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" id="signup-cpassword" class="form-control" name="cpassword" placeholder="Rewrite Password">
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <!-- Button -->                                        
@@ -167,7 +141,7 @@
                             <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
 
                                 <div class="col-md-offset-3 col-md-9">
-                                    <button id="btn-fbsignup" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Sign Up with Facebook</button>
+                                    <button id="btn-fbsignup" disabled="disabled" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Sign Up with Facebook</button>
                                 </div>                                           
 
                             </div>
@@ -176,45 +150,97 @@
                 </div>
             </div> 
         </div>
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#btn-login").on("click", function(){
-                var url = "./loginServlet";
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: $('#loginform').serialize(),
-                    success:function(data){
-                        if(data.trim() == 503){
-                            alert("Invalid Username Password");
-                        }else{
-                            window.location.href = "./userCalculationArea";
+                $('.modal-body').html("");
+                $('#myModalLabel').html("");
+                var email = $("#login-username").val().trim();
+                var pass = $("#login-password").val().trim();
+                //                alert(email);
+                //                alert(validateEmail(email));
+                if( email=="" || !validateEmail(email) || pass=="" ){
+                    $('.modal').modal('show');
+                    $('#myModalLabel').html("Login Failed");
+                    $('.modal-body').html("<p class='errorMsg'>Invalid Email or Password.</p>");
+                    return false;
+                }else{
+                    var url = "./loginServlet";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#loginform').serialize(),
+                        success:function(data){
+                            if(data.trim() == 503){
+                                alert("Invalid Username Password");
+                            }else{
+                                window.location.href = "./userCalculationArea";
+                            }
                         }
-                    }
-                });
-                return false;
+                    });
+                    return false;
+                }
             });
                 
             $("#btn-signup").on("click",function(){
-                var url ="./registrationServlet";
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: $('#signupform').serialize(),
-                    success:function(data){
-                        if(data.toString() == 200){
-                            $('#signupform')[0].reset();
-                            $("#signinlink").click();
-                            alert("Registration Successfull");
-                        }else{
-                            alert("Registration Failed");
-                            $('#signupform')[0].reset();
+                $('.modal-body').html("");
+                $('#myModalLabel').html("");
+                var email = $("#signup-email").val().trim();
+                var pass = $("#signup-password").val().trim();
+                var firstname = $("#signup-firstname").val().trim();
+                var lastname = $('#signup-lastname').val().trim();
+                var cpass = $("#signup-cpassword").val().trim();
+                if(email=="" || pass=="" || firstname=="" || lastname == "" || !validateEmail(email) || pass!=cpass){
+                    $('.modal').modal("show");
+                    $('#myModalLabel').html("Registration Failed");
+                    $('.modal-body').html("<p class='errorMsg'>Invalid Information. Please Try Again</p>");
+                    return false;
+                }else{
+                    var url ="./registrationServlet";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#signupform').serialize(),
+                        success:function(data){
+                            if(data.toString() == 200){
+                                $('#signupform')[0].reset();
+                                $("#signinlink").click();
+                                $('.modal').modal("show");
+                                $('#myModalLabel').html("Registration Info.");
+                                $('.modal-body').html("<p class='successMsg'>Registration Successfull.</p>");
+                            }else{
+                                $('.modal').modal("show");
+                                $('#myModalLabel').html("Registration Failed");
+                                $('.modal-body').html("<p class='errorMsg'>Invalid Information. Please Try Again</p>");
+                                $('#signupform')[0].reset();
+                            }
                         }
-                    }
-                });
-                return false;
+                    });
+                    return false;
+                }
             });
+            //            Error Checking
+            function validateEmail(email) { 
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            } 
             $(document).ajaxStart(function(){
                 $(".myLoadingImage").show();
             });
