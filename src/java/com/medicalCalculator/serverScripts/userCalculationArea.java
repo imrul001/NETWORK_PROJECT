@@ -36,15 +36,7 @@ public class userCalculationArea extends HttpServlet {
         HttpSession session = request.getSession(false);
         try {
             if (session.getAttribute("email") != null) {
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Calculation</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<div><h1>Hello...." + session.getAttribute("email") + "</h1></div>");
-                out.println("<div><a href='./logoutServlet'>logout</a></div>");
-                out.println("</body>");
-                out.println("</html>");
+                response.sendRedirect("userHomeServlet");
             } else {
                 response.sendRedirect("/MedicalCalculator");
             }

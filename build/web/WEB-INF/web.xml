@@ -16,6 +16,10 @@
         <servlet-name>logoutServlet</servlet-name>
         <servlet-class>com.medicalCalculator.serverScripts.logoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>userHomeServlet</servlet-name>
+        <servlet-class>com.medicalCalculator.serverScripts.userHomeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userHomeServlet</servlet-name>
+        <url-pattern>/userHomeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
