@@ -305,7 +305,7 @@
                                 return false;
                             });
                             $("#clear").on("click",function(){
-                              resetForm(form1)
+                                resetForm(form1)
                             })
                         });
                     });
