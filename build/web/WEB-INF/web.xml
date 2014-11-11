@@ -20,6 +20,10 @@
         <servlet-name>userHomeServlet</servlet-name>
         <servlet-class>com.medicalCalculator.serverScripts.userHomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CalculationServlet</servlet-name>
+        <servlet-class>com.medicalCalculator.serverScripts.CalculationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>userHomeServlet</servlet-name>
         <url-pattern>/userHomeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CalculationServlet</servlet-name>
+        <url-pattern>/CalculationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
