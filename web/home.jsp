@@ -326,6 +326,7 @@
                                 $(this).val("");
                             }
                         })
+                        $("input[name='method']", "#"+id).val(id);
                     }
                     function hideAll (){
                         $("#eGFR").hide();
