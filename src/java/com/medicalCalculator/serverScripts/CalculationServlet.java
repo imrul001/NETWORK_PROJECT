@@ -39,33 +39,115 @@ public class CalculationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         String method = request.getParameter("method").trim();
-        double weight = 0.0;
-        double height = 0.0;
+//        double wt = 0.0;
+//        double ht = 0.0;
         double result = 0.0;
-        String unit = "whatever unit";
+
+//        String unit = "";
         resultObject object = new resultObject();
         Map map = new HashMap();
         
         //@Game
         // This is the example...you should look at
         
-        if (method.equalsIgnoreCase("BMI")) {
-            weight = Double.valueOf(request.getParameter("wt"));
-            height = Double.valueOf(request.getParameter("ht"));
-            object.setTitle("Body Mass Index: BMI");
-            object.setInput("Weight =" + weight + " kg, Height=" + height);
-            object.setUnit("Unit");
-        } 
+//        if (method.equalsIgnoreCase("BMI")) {
+//            weight = Double.valueOf(request.getParameter("wt"));
+//            height = Double.valueOf(request.getParameter("ht"));
+//            object.setTitle("Body Mass Index: BMI");
+//            object.setInput("Weight =" + weight + " kg, Height=" + height);
+//            object.setUnit("Unit");
+//        } 
         //@Game
         // You should write your here....(for all four/five calculations)
         
+        if (method.equalsIgnoreCase("BMI")) {
+            double wt = Double.valueOf(request.getParameter("wt"));
+            double ht = Double.valueOf(request.getParameter("ht"));
+            object.setTitle("Body Mass Index: BMI");
+            object.setInput("Weight =" + wt + "<br>" + " kg, Height=" + ht + " cm");
+            object.setUnit("");
+            result = calculation.calBMI(wt, ht);
+        } 
+
+        if (method.equalsIgnoreCase("BSA")) {
+            double wt = Double.valueOf(request.getParameter("wt"));
+            double ht = Double.valueOf(request.getParameter("ht"));
+            object.setTitle("Body Serface Area: BSA");
+            object.setInput("Weight =" + wt + "<br>" + " kg, Height=" + ht + " cm");
+            object.setUnit("m<sup>2</sup>");
+            result = calculation.calBSA(wt, ht);
+        }
         
+        if (method.equalsIgnoreCase("anion")) {
+            double Na;
+            double Cl;
+            double bicarb;
+            Na = Double.valueOf(request.getParameter("Sodium"));
+            Cl = Double.valueOf(request.getParameter("Chloride"));
+            bicarb = Double.valueOf(request.getParameter("Bicarb"));
+            object.setTitle("Anion-Gap");
+            object.setInput("Na = " + Na + " mEq/L" +"<br>"
+                            + "Cl = " + Cl + " mEq/L" +"<br>"
+                            + "Bicarb = " + bicarb + " mEq/L");
+            object.setUnit("mEq/L");
+            result = calculation.calAnionGap(Na,Cl,bicarb);
+        }
         
+        if (method.equalsIgnoreCase("IV")) {
+            double dose;
+            double mg;
+            double mL;
+            dose = Double.valueOf(request.getParameter("Dose"));
+            mg = Double.valueOf(request.getParameter("mg"));
+            mL = Double.valueOf(request.getParameter("mL"));
+            object.setTitle("Intravenous Infusion Rate");
+            object.setInput("Dose = " + dose + " mg/hr" +"<br>"
+                            + "Drug in solution = " + mg + " mg" +"<br>"
+                            + "Total Volume = " + mL + " mL");
+            object.setUnit("mL/hr");
+            result = calculation.calIV(dose,mg,mL);
+        }
         
+        if (method.equalsIgnoreCase("eGFR")) {
+            double sCr;
+            double age;
+            int sex;
+            String black="";
+            boolean bBlack=false;
+            String sSex = "";
+            String sBlack ="";
+           
+                
+            sCr = Double.valueOf(request.getParameter("sCr"));
+            age = Double.valueOf(request.getParameter("age"));
+            sex = Integer.valueOf(request.getParameter("sex"));
+            black = String.valueOf(request.getParameter("black"));
+            
+            if("YES".equals(black)){
+                bBlack=true;
+                sBlack="African-American";
+            } else{
+                bBlack=false;
+            }
+            
+            if(sex==1){
+                sSex="male";
+            }else{
+                sSex ="female";
+            }
+
+            object.setTitle("estimated Glomerular Filtration Rate: eGFR");
+            object.setInput("serum creatinine = " + sCr + " mg/dL" +"<br>"
+                            + "age = " + age + " years" +"<br>"
+                            + "sex = " + sSex +"<br>"
+                            + sBlack);
+            object.setUnit("mL/min/1.73<sup>2</sup>");
+            result = calculation.calGFR(sCr,age,sex,bBlack);
+        }
         
         try {
             if (session.getAttribute("email") != null) {
-                result = calculation.getBMI(weight, height);
+                
                 object.setOutput(result +" "+object.getUnit());
                 map.put("title",object.getTitle());
                 map.put("input", object.getInput());
