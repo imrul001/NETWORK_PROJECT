@@ -61,7 +61,7 @@ public class Anion {
         return bicarb;
     }
 
-    public void setMl(double bicarb) {
+    public void setBicarb(double bicarb) {
         this.bicarb = bicarb;
     }
 
