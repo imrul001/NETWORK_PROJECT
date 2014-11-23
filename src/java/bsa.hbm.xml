@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="com.medicalCalculator.database.operation.BSA" table="bsa">
+      <meta attribute="class-description">
+         This class contains BSA record details. 
+      </meta>
+      <id name="id" type="int" column="ID">
+         <generator class="native"/>
+      </id>
+      <property name="email" column="email" type="string"/>
+      <property name="wt" column="wt" type="double"/>
+      <property name="ht" column="ht" type="double"/>
+      <property name="result" column="result" type="double"/>
+   </class>
+</hibernate-mapping>

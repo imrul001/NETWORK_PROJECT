@@ -9,23 +9,19 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-/**
- *
- * @author imrul
- */
-public class ManageeGFR {
+
+public class ManageAnion {
 
     private SessionFactory factory;
     private StandardServiceRegistry serviceRegistry;
 
     public static void main(String[] args) {
         System.out.println("testing database");
-        ManageeGFR manageUser = new ManageeGFR();
-        System.out.println(manageUser.addeGFR("armadillozz@hotmail.com",1,1,1,false,1));
+        ManageAnion manageUser = new ManageAnion();
+        System.out.println(manageUser.addAnion("armadillozz@hotmail.com",2,30,1,30));
     }
-    
-    
-    public ManageeGFR() {
+
+    public ManageAnion() {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("/resources/hibernate.cfg.xml");
@@ -37,14 +33,14 @@ public class ManageeGFR {
         }
     }
 
-    public Integer addeGFR(String email, double sCr, double age, int sex, boolean black, double result) {
+    public Integer addAnion(String email, double na, double cl, double bicarb, double result) {
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer eGFRId = null;
+        Integer anionId = null;
         try {
             tx = session.beginTransaction();
-            eGFR eGFR = new eGFR(email,sCr,age,sex,black,result);
-            eGFRId = (Integer) session.save(eGFR);
+            Anion anion = new Anion(email,na,cl,bicarb,result);
+            anionId = (Integer) session.save(anion);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -52,7 +48,7 @@ public class ManageeGFR {
             }
             e.printStackTrace();
         }
-        return eGFRId;
+        return anionId;
     }
 
 //    public boolean isloginUser(String email, String password) {

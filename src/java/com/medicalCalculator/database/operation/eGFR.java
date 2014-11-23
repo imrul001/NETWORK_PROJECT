@@ -4,10 +4,6 @@
  */
 package com.medicalCalculator.database.operation;
 
-/**
- *
- * @author imrul
- */
 public class eGFR {
     private int id;
     private String email;

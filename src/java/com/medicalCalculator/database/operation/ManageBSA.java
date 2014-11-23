@@ -9,23 +9,18 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-/**
- *
- * @author imrul
- */
-public class ManageeGFR {
+public class ManageBSA {
 
     private SessionFactory factory;
     private StandardServiceRegistry serviceRegistry;
 
     public static void main(String[] args) {
         System.out.println("testing database");
-        ManageeGFR manageUser = new ManageeGFR();
-        System.out.println(manageUser.addeGFR("armadillozz@hotmail.com",1,1,1,false,1));
+        ManageBSA manageUser = new ManageBSA();
+        System.out.println(manageUser.addBSA("armadillozz@hotmail.com",2,1,30));
     }
-    
-    
-    public ManageeGFR() {
+
+    public ManageBSA() {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("/resources/hibernate.cfg.xml");
@@ -37,14 +32,14 @@ public class ManageeGFR {
         }
     }
 
-    public Integer addeGFR(String email, double sCr, double age, int sex, boolean black, double result) {
+    public Integer addBSA(String email, double wt, double ht, double result) {
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer eGFRId = null;
+        Integer bsaId = null;
         try {
             tx = session.beginTransaction();
-            eGFR eGFR = new eGFR(email,sCr,age,sex,black,result);
-            eGFRId = (Integer) session.save(eGFR);
+            BSA bsa = new BSA(email,wt,ht,result);
+            bsaId = (Integer) session.save(bsa);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -52,7 +47,7 @@ public class ManageeGFR {
             }
             e.printStackTrace();
         }
-        return eGFRId;
+        return bsaId;
     }
 
 //    public boolean isloginUser(String email, String password) {

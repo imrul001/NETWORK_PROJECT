@@ -98,21 +98,16 @@
                                                             <span class="input-group-addon" >
                                                                 <input type="checkbox" name="black" value="NO"> African-American</input>
                                                                 <input id="method" name="method" type="hidden" value="eGFR">
+                                                                <input id="eGFR_result" name="result" type="hidden" class="form-control input-md">
+                                                                <input id="eGFR_email" name="email" type="hidden" value="${SessionEmail}" class="form-control input-md">
                                                             </span>    									
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <!--<label class="col-md-4 control-label" for="eGFR_result">age (years):</label>-->  
-                                                        <div class="col-md-4">
-                                                              <input id="eGFR_result" name="result" type="text" class="form-control input-md">
-
-                                                        </div>
-                                                    </div> 
                                                     </div>
                                                 </fieldset>
                                             </form>
                                         </div>
                                     </div>
+                                </div>
                                     <!-- Intravenous Infusion Rate-->
                                     <div class ="row" id="IV">
                                         <div class="row">
@@ -121,9 +116,9 @@
                                                     <fieldset>
                                                         <!-- Text input-->
                                                         <div class="form-group">
-                                                            <label class="col-md-4 control-label" for="Dose">Dose (mg/hr):</label>  
+                                                            <label class="col-md-4 control-label" for="Dose">dose (mg/hr):</label>  
                                                             <div class="col-md-4">
-                                                                <input id="Dose" name="Dose" type="text" placeholder="Enter Dose" class="form-control input-md">
+                                                                <input id="dose" name="dose" type="text" placeholder="Enter Dose" class="form-control input-md">
                                                             </div>                             
                                                         </div>
 
@@ -137,10 +132,12 @@
 
                                                         <!-- Text input-->
                                                         <div class="form-group">
-                                                            <label class="col-md-4 control-label" for="mL">Total Volume (mL):</label>  
+                                                            <label class="col-md-4 control-label" for="ml">Total Volume (mL):</label>  
                                                             <div class="col-md-4">
-                                                                <input id="mL" name="mL" type="text" placeholder="Enter Total Volume" class="form-control input-md">
+                                                                <input id="ml" name="ml" type="text" placeholder="Enter Total Volume" class="form-control input-md">
                                                                 <input id="method" name="method" type="hidden" value="IV">
+                                                                <input id="IV_result" name="result" type="hidden" class="form-control input-md">
+                                                                <input id="IV_email" name="email" type="hidden" value="${SessionEmail}" class="form-control input-md">
                                                             </div>                              
                                                         </div>
 
@@ -177,6 +174,8 @@
                                                             <div class="col-md-4">
                                                                 <input id="Bicarb" name="Bicarb" type="text" placeholder="Enter Bicarb level" class="form-control input-md">
                                                                 <input id="method" name="method" type="hidden" value="anion">
+                                                                <input id="anion_result" name="result" type="hidden" class="form-control input-md">
+                                                                <input id="anion_email" name="email" type="hidden" value="${SessionEmail}" class="form-control input-md">
                                                             </div>								
                                                         </div>
                                                     </fieldset>
@@ -205,6 +204,8 @@
                                                             <div class="col-md-4">
                                                                 <input id="ht" name="ht" type="text" placeholder="Enter height" class="form-control input-md">
                                                                 <input id="method" name="method" type="hidden" value="BSA">
+                                                                <input id="BSA_result" name="result" type="hidden" class="form-control input-md">
+                                                                <input id="BSA_email" name="email" type="hidden" value="${SessionEmail}" class="form-control input-md">
                                                             </div>                                
                                                         </div>
                                                     </fieldset>
@@ -234,6 +235,8 @@
                                                             <div class="col-md-4">
                                                                 <input id="ht" name="ht" type="text" placeholder="Enter height" class="form-control input-md" value="">
                                                                 <input id="method" name="method" type="hidden" value="BMI">
+                                                                <input id="BMI_result" name="result" type="hidden" class="form-control input-md">
+                                                                <input id="BMI_email" name="email" type="hidden" value="${SessionEmail}" class="form-control input-md">
                                                             </div>                               
                                                         </div>
                                                     </fieldset>
@@ -300,7 +303,6 @@
 //                            resetAllExcept(form1);
 
                             $("#clear").on("click",function(){
-                                
                                 resetForm(form1);
                             })
                         });
@@ -337,14 +339,13 @@
                                     data: $("form","#"+form1).serialize(),
                                     success: function(data){
                                         if(data.toString() == 200){
-                                            alert("200");
+                                            alert("Save Successful");
                                         }else{
-                                            alert("500");
+                                            alert("Save Unsuccessful");
                                         }
                                     }
                                 });
                             }
-                           
                         })
                     });   
                     
@@ -352,7 +353,7 @@
                     function isBlankInput(id){
                         var flag = false;
                         $(":text","#"+id).each(function(){
-                            if($(this).val()=="" && $(this).attr(name)=="result"){
+                            if($(this).val()=="" && ($(this).attr(name)=="result")){
                                 flag = true;
                             }
                         })
@@ -361,13 +362,13 @@
                         }
                     }
                     function resetForm(id){
-                        $("#" + id + "_result").val("");
                         $("input","#"+id).each(function(){
-                            if($(this).val()!=""){
+                            if($(this).val()!==""){
                                 $(this).val("");
                             }
-                        })
+                        });
                         $("input[name='method']", "#"+id).val(id);
+                        $("input[name='email']","#"+id).val("${SessionEmail}");
                     }
 
                     function hideAll (){

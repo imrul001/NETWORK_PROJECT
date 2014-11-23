@@ -84,9 +84,9 @@ public class CalculationServlet extends HttpServlet {
             double dose;
             double mg;
             double mL;
-            dose = Double.valueOf(request.getParameter("Dose"));
+            dose = Double.valueOf(request.getParameter("dose"));
             mg = Double.valueOf(request.getParameter("mg"));
-            mL = Double.valueOf(request.getParameter("mL"));
+            mL = Double.valueOf(request.getParameter("ml"));
             object.setTitle("Intravenous Infusion Rate");
             object.setInput("Dose = " + dose + " mg/hr" +"<br>"
                             + "Drug in solution = " + mg + " mg" +"<br>"

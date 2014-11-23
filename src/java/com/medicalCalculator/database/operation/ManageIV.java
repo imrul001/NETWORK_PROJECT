@@ -9,23 +9,18 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-/**
- *
- * @author imrul
- */
-public class ManageeGFR {
+public class ManageIV {
 
     private SessionFactory factory;
     private StandardServiceRegistry serviceRegistry;
 
     public static void main(String[] args) {
         System.out.println("testing database");
-        ManageeGFR manageUser = new ManageeGFR();
-        System.out.println(manageUser.addeGFR("armadillozz@hotmail.com",1,1,1,false,1));
+        ManageIV manageUser = new ManageIV();
+        System.out.println(manageUser.addIV("armadillozz@hotmail.com",2,30,1,30));
     }
-    
-    
-    public ManageeGFR() {
+
+    public ManageIV() {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("/resources/hibernate.cfg.xml");
@@ -37,14 +32,14 @@ public class ManageeGFR {
         }
     }
 
-    public Integer addeGFR(String email, double sCr, double age, int sex, boolean black, double result) {
+    public Integer addIV(String email, double dose, double mg, double ml, double result) {
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer eGFRId = null;
+        Integer IVid = null;
         try {
             tx = session.beginTransaction();
-            eGFR eGFR = new eGFR(email,sCr,age,sex,black,result);
-            eGFRId = (Integer) session.save(eGFR);
+            IV iv = new IV(email,dose,mg,ml,result);
+            IVid = (Integer) session.save(iv);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -52,7 +47,7 @@ public class ManageeGFR {
             }
             e.printStackTrace();
         }
-        return eGFRId;
+        return IVid;
     }
 
 //    public boolean isloginUser(String email, String password) {

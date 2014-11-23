@@ -7,6 +7,10 @@ package com.medicalCalculator.serverScripts;
 import com.google.gson.Gson;
 import com.medicalCalculation.calculations.calculation;
 import com.medicalCalculation.calculations.resultObject;
+import com.medicalCalculator.database.operation.ManageAnion;
+import com.medicalCalculator.database.operation.ManageBMI;
+import com.medicalCalculator.database.operation.ManageBSA;
+import com.medicalCalculator.database.operation.ManageIV;
 import com.medicalCalculator.database.operation.ManageeGFR;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,44 +48,71 @@ public class insertRecordServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String method = request.getParameter("method").trim();
         String email = request.getParameter("email");
-        resultObject object = new resultObject();
-        Map map = new HashMap();
+        Integer userid=0;
+//        resultObject object = new resultObject();
+//        Map map = new HashMap();
         
-        if (method.equalsIgnoreCase("eGFR")) {
-            double sCr = Double.valueOf(request.getParameter("sCr"));
-            double age = Double.valueOf(request.getParameter("age"));
-            int sex = Integer.valueOf(request.getParameter("sex"));
-            String black = String.valueOf(request.getParameter("black"));
-            double result = Double.valueOf(request.getParameter("result"));
-            boolean bBlack;
-            if("NO".equals(black)){
-                bBlack=true;
-            } else{
-                bBlack=false;
-            }
+        if (session.getAttribute("email") != null) {
             try {
-                if (session.getAttribute("email") != null) {
-
-    //                object.setOutput(result +" ");
-    //                map.put("title",object.getTitle());
-    //                map.put("input", object.getInput());
-    //                map.put("output", object.getOutput());
-    //                map.put("unit", object.getUnit());
-                    ManageeGFR manageeGFR = new ManageeGFR();
-                    Integer userid = manageeGFR.addeGFR(email, sCr, age, sex,bBlack,result);
-                    if(userid != null){
-                        out.println("200".toString());
-                    }else{
-                        out.println("500".toString());
+                if (method.equalsIgnoreCase("eGFR")) {
+                    double sCr = Double.valueOf(request.getParameter("sCr"));
+                    double age = Double.valueOf(request.getParameter("age"));
+                    int sex = Integer.valueOf(request.getParameter("sex"));
+                    String black = String.valueOf(request.getParameter("black"));
+                    double result = Double.valueOf(request.getParameter("result"));
+                    boolean bBlack;
+                    if("NO".equals(black)){
+                        bBlack=true;
+                    } else{
+                        bBlack=false;
                     }
-                } else {
-                    out.println("sessionFailed");
+                    ManageeGFR manageeGFR = new ManageeGFR();
+                    userid = manageeGFR.addeGFR(email, sCr, age, sex,bBlack,result);
+                }
+            
+                if (method.equalsIgnoreCase("IV")) {
+                    double dose = Double.valueOf(request.getParameter("dose"));
+                    double mg = Double.valueOf(request.getParameter("mg"));
+                    double mL = Double.valueOf(request.getParameter("ml"));
+                    double result = Double.valueOf(request.getParameter("result"));
+                    ManageIV manageIv = new ManageIV();
+                    userid = manageIv.addIV(email, dose, mg,mL,result);
+                }
+
+                if (method.equalsIgnoreCase("anion")) {
+                    double na = Double.valueOf(request.getParameter("Sodium"));
+                    double cl = Double.valueOf(request.getParameter("Chloride"));
+                    double bicarb = Double.valueOf(request.getParameter("Bicarb"));
+                    double result = Double.valueOf(request.getParameter("result"));
+                    ManageAnion manageAnion = new ManageAnion();
+                    userid = manageAnion.addAnion(email, na, cl, bicarb,result);
+                }
+
+                if (method.equalsIgnoreCase("BMI")) {
+                    double wt = Double.valueOf(request.getParameter("wt"));
+                    double ht = Double.valueOf(request.getParameter("ht"));
+                    double result = Double.valueOf(request.getParameter("result"));
+                    ManageBMI manageBMI = new ManageBMI();
+                    userid = manageBMI.addBMI(email, wt, ht,result);
+                }
+
+                if (method.equalsIgnoreCase("BSA")) {
+                    double wt = Double.valueOf(request.getParameter("wt"));
+                    double ht = Double.valueOf(request.getParameter("ht"));
+                    double result = Double.valueOf(request.getParameter("result"));
+                    ManageBSA manageBSA = new ManageBSA();
+                    userid = manageBSA.addBSA(email, wt, ht,result);
+                }
+                
+                if(userid != null && userid !=0){
+                    out.println("200".toString());
+                }else{
+                    out.println("500".toString());
                 }
             } finally {
                 out.close();
             }
-         
-        }
+        }      
     }
     /**
      * Handles the HTTP
