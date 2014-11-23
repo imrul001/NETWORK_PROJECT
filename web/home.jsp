@@ -96,11 +96,18 @@
                                                     <div class="form-group">
                                                         <div class="col-md-4 col-md-offset-4">
                                                             <span class="input-group-addon" >
-                                                                <input type="checkbox" name="black" value="YES"> African-American</input>
+                                                                <input type="checkbox" name="black" value="NO"> African-American</input>
                                                                 <input id="method" name="method" type="hidden" value="eGFR">
                                                             </span>    									
                                                         </div>
                                                     </div>
+                                                    <div class="form-group" >
+                                                        <!--<label class="col-md-4 control-label" for="eGFR_result">age (years):</label>-->  
+                                                        <div class="col-md-4">
+                                                              <input id="eGFR_result" name="result" type="text" class="form-control input-md">
+
+                                                        </div>
+                                                    </div> 
                                                     </div>
                                                 </fieldset>
                                             </form>
@@ -238,12 +245,13 @@
                                 <div class="row" id="formButton" style="display: none">
                                     <div class="form-group">								
                                         <div class="col-md-4 col-md-offset-5">
+                                            <button id="calc" name="calc" class="btn btn-primary">Calculate</button>                                            
+                                            <button id="btn-save" name="save" class="btn btn-success">Save</button>
                                             <button id="clear" name="clear" class="btn btn-danger">Clear</button>
-                                            <button id="calc" name="calc" class="btn btn-primary">Calculate</button>
                                         </div>
                                     </div>
                                 </div>
-
+                                                   
                             </div>
                         </div>
                     </div>
@@ -279,9 +287,11 @@
                     $(document).ready(function(){
                         var $menu="";
                         var form1="";
+                        var $result="";
                         $("li").click(function(){
                              $menu = $(this).attr("id");
                              form1 = $menu.substring(2);
+                             $result=""
                             hideAll();
                             $("#allForm").show();
                             $("#"+form1).show(1000);
@@ -290,35 +300,59 @@
 //                            resetAllExcept(form1);
 
                             $("#clear").on("click",function(){
-                                resetForm(form1)
+                                
+                                resetForm(form1);
                             })
                         });
                         
-                            $("#calc").on("click", function(){
-                                
-                                if(!isBlankInput(form1)){
-                                    var url = "./CalculationServlet";
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url,
-                                        data: $("form","#"+form1).serialize(),
-                                        success: function(data){
-                                            $(".modal").modal("show");
-                                            $(".modal-title").html(data.title); 
-                                            $("#input",".modal-body").html(data.input);
-                                            $("#output",".modal-body").html(data.output);
+                        $("#calc").on("click", function(){
+
+                            if(!isBlankInput(form1)){
+                                var url = "./CalculationServlet";
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    data: $("form","#"+form1).serialize(),
+                                    success: function(data){
+                                        $(".modal").modal("show");
+                                        $(".modal-title").html(data.title); 
+                                        $("#input",".modal-body").html(data.input);
+                                        $("#" +form1 +"_result").val(data.output);
+                                        $("#output",".modal-body").html(data.output+data.unit);
+                                    }
+                                }); 
+
+                            }else{
+                                alert("All Fields are required");
+                            }
+                            return false;
+                        });
+                        
+                        $("#btn-save").on("click",function(){
+                            if(!isBlankInput(form1) && $("#" +form1 +"_result").val() !== "") {
+                                var url = "./insertRecordServlet";
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    data: $("form","#"+form1).serialize(),
+                                    success: function(data){
+                                        if(data.toString() == 200){
+                                            alert("200");
+                                        }else{
+                                            alert("500");
                                         }
-                                    })
-                                }else{
-                                    alert("All Fields are required" + form1);
-                                }
-                                return false;
-                            });
-                    });
+                                    }
+                                });
+                            }
+                           
+                        })
+                    });   
+                    
+                    
                     function isBlankInput(id){
                         var flag = false;
                         $(":text","#"+id).each(function(){
-                            if($(this).val()==""){
+                            if($(this).val()=="" && $(this).attr(name)=="result"){
                                 flag = true;
                             }
                         })
@@ -327,7 +361,7 @@
                         }
                     }
                     function resetForm(id){
-                        
+                        $("#" + id + "_result").val("");
                         $("input","#"+id).each(function(){
                             if($(this).val()!=""){
                                 $(this).val("");

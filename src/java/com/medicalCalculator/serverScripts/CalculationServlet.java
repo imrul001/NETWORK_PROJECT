@@ -46,25 +46,12 @@ public class CalculationServlet extends HttpServlet {
 //        String unit = "";
         resultObject object = new resultObject();
         Map map = new HashMap();
-        
-        //@Game
-        // This is the example...you should look at
-        
-//        if (method.equalsIgnoreCase("BMI")) {
-//            weight = Double.valueOf(request.getParameter("wt"));
-//            height = Double.valueOf(request.getParameter("ht"));
-//            object.setTitle("Body Mass Index: BMI");
-//            object.setInput("Weight =" + weight + " kg, Height=" + height);
-//            object.setUnit("Unit");
-//        } 
-        //@Game
-        // You should write your here....(for all four/five calculations)
-        
+       
         if (method.equalsIgnoreCase("BMI")) {
             double wt = Double.valueOf(request.getParameter("wt"));
             double ht = Double.valueOf(request.getParameter("ht"));
             object.setTitle("Body Mass Index: BMI");
-            object.setInput("Weight =" + wt + "<br>" + " kg, Height=" + ht + " cm");
+            object.setInput("Weight = " + wt + " kg <br> Height = " + ht + " cm");
             object.setUnit("");
             result = calculation.calBMI(wt, ht);
         } 
@@ -73,7 +60,7 @@ public class CalculationServlet extends HttpServlet {
             double wt = Double.valueOf(request.getParameter("wt"));
             double ht = Double.valueOf(request.getParameter("ht"));
             object.setTitle("Body Serface Area: BSA");
-            object.setInput("Weight =" + wt + "<br>" + " kg, Height=" + ht + " cm");
+            object.setInput("Weight = " + wt + " kg <br> Height = " + ht + " cm");
             object.setUnit("m<sup>2</sup>");
             result = calculation.calBSA(wt, ht);
         }
@@ -123,12 +110,13 @@ public class CalculationServlet extends HttpServlet {
             sex = Integer.valueOf(request.getParameter("sex"));
             black = String.valueOf(request.getParameter("black"));
             
-            if("YES".equals(black)){
+            if("NO".equals(black)){
                 bBlack=true;
                 sBlack="African-American";
             } else{
                 bBlack=false;
             }
+
             
             if(sex==1){
                 sSex="male";
@@ -148,10 +136,11 @@ public class CalculationServlet extends HttpServlet {
         try {
             if (session.getAttribute("email") != null) {
                 
-                object.setOutput(result +" "+object.getUnit());
+                object.setOutput(result +" ");
                 map.put("title",object.getTitle());
                 map.put("input", object.getInput());
                 map.put("output", object.getOutput());
+                map.put("unit", object.getUnit());
                 write(response, map);
 
             } else {
