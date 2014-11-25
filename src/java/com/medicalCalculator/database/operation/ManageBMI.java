@@ -4,6 +4,9 @@
  */
 package com.medicalCalculator.database.operation;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -49,7 +52,35 @@ public class ManageBMI {
         }
         return bmiId;
     }
+    public List<String> listResult(String email){
+      Session session = factory.openSession();
+      Transaction tx = null;
+      List<String> resultList = new ArrayList();
+      try{
+         tx = session.beginTransaction();
+//         List employees = session.createQuery("FROM eGFR e WHERE e.email=").list(); 
+         String hql = "FROM BMI e WHERE e.email='"+email+"'";
+         Query query = session.createQuery(hql);
+         List results = query.list();
 
+            for (Iterator iterator = results.iterator(); iterator.hasNext();){
+               BMI bmi = (BMI) iterator.next();            
+
+               resultList.add("<td>" + bmi.getId() + "</td>"
+                               +"<td>" + bmi.getWt()+ "</td>"
+                               +"<td>" + bmi.getHt()+ "</td>"
+                               +"<td>" + bmi.getResult() + "</td>");
+            }
+            tx.commit();
+         }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+         }finally {
+            session.close(); 
+         }
+//      return resultList;
+      return resultList;
+   }
 //    public boolean isloginUser(String email, String password) {
 //        Session session = factory.openSession();
 //        Transaction t = null;

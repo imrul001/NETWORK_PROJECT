@@ -14,7 +14,9 @@ import com.medicalCalculator.database.operation.ManageIV;
 import com.medicalCalculator.database.operation.ManageeGFR;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,8 +50,9 @@ public class insertRecordServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String method = request.getParameter("method").trim();
         String email = request.getParameter("email");
-        Integer userid=0;
-//        resultObject object = new resultObject();
+        Integer userid= null;
+        Map map = new HashMap();
+        resultObject object = new resultObject();
 //        Map map = new HashMap();
         
         if (session.getAttribute("email") != null) {
@@ -68,6 +71,7 @@ public class insertRecordServlet extends HttpServlet {
                     }
                     ManageeGFR manageeGFR = new ManageeGFR();
                     userid = manageeGFR.addeGFR(email, sCr, age, sex,bBlack,result);
+                    write(response,manageeGFR.listResult(email),userid);                 
                 }
             
                 if (method.equalsIgnoreCase("IV")) {
@@ -77,6 +81,7 @@ public class insertRecordServlet extends HttpServlet {
                     double result = Double.valueOf(request.getParameter("result"));
                     ManageIV manageIv = new ManageIV();
                     userid = manageIv.addIV(email, dose, mg,mL,result);
+                     write(response,manageIv.listResult(email),userid);      
                 }
 
                 if (method.equalsIgnoreCase("anion")) {
@@ -86,6 +91,7 @@ public class insertRecordServlet extends HttpServlet {
                     double result = Double.valueOf(request.getParameter("result"));
                     ManageAnion manageAnion = new ManageAnion();
                     userid = manageAnion.addAnion(email, na, cl, bicarb,result);
+                     write(response,manageAnion.listResult(email),userid);      
                 }
 
                 if (method.equalsIgnoreCase("BMI")) {
@@ -94,6 +100,7 @@ public class insertRecordServlet extends HttpServlet {
                     double result = Double.valueOf(request.getParameter("result"));
                     ManageBMI manageBMI = new ManageBMI();
                     userid = manageBMI.addBMI(email, wt, ht,result);
+                     write(response,manageBMI.listResult(email),userid);      
                 }
 
                 if (method.equalsIgnoreCase("BSA")) {
@@ -102,18 +109,21 @@ public class insertRecordServlet extends HttpServlet {
                     double result = Double.valueOf(request.getParameter("result"));
                     ManageBSA manageBSA = new ManageBSA();
                     userid = manageBSA.addBSA(email, wt, ht,result);
+                     write(response,manageBSA.listResult(email),userid);      
                 }
                 
-                if(userid != null && userid !=0){
-                    out.println("200".toString());
-                }else{
-                    out.println("500".toString());
-                }
+//                if(userid != null && userid !=0){
+//                    out.println("200".toString());
+//                    
+//                }else{
+//                    out.println("500".toString());
+//                }
             } finally {
                 out.close();
             }
         }      
     }
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -154,9 +164,15 @@ public class insertRecordServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(map)); //this is how simple GSON works
+    private void write(HttpServletResponse response, List results,Integer userId) throws IOException {
+        if(userId !=null){
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(new Gson().toJson(results)); //this is how simple GSON works
+        }else{
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().println("500".toString());
+        }
+  
     }
 }

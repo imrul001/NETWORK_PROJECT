@@ -4,6 +4,11 @@
  */
 package com.medicalCalculator.database.operation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -49,7 +54,36 @@ public class ManageIV {
         }
         return IVid;
     }
+public List<String> listResult(String email){
+      Session session = factory.openSession();
+      Transaction tx = null;
+      List<String> resultList = new ArrayList();
+      try{
+         tx = session.beginTransaction();
+//         List employees = session.createQuery("FROM eGFR e WHERE e.email=").list(); 
+         String hql = "FROM IV e WHERE e.email='"+email+"'";
+         Query query = session.createQuery(hql);
+         List results = query.list();
 
+            for (Iterator iterator = results.iterator(); iterator.hasNext();){
+               IV iv = (IV) iterator.next();            
+
+               resultList.add("<td>" + iv.getId() + "</td>"
+                               +"<td>" + iv.getDose()+ "</td>"
+                               +"<td>" + iv.getMg() + "</td>"
+                               +"<td>" + iv.getMl() + "</td>"
+                               +"<td>" + iv.getResult() + "</td>");
+            }
+            tx.commit();
+         }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+         }finally {
+            session.close(); 
+         }
+//      return resultList;
+      return resultList;
+   }
 //    public boolean isloginUser(String email, String password) {
 //        Session session = factory.openSession();
 //        Transaction t = null;
