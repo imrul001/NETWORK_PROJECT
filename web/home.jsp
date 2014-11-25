@@ -259,104 +259,149 @@
                         </div>
                     </div>
                     <div class="container">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Calculation History</h3>
-                            </div>
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"  >
+                                  Calculation History
+                                </a>>
+                            </h4>
+                          </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" id="myCollapsible">
                             <div class="panel-body">
-                                <div class="row" id="eGFR_History">
-                                    <h3 class="text" style="text-align: center;">eGFR</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>sCr (mg/dL)</th>
-                                            <th>Age (years)</th>
-                                            <th>Sex</th>
-                                            <th>African</th>
-                                            <th>eGFR (mL/min/1.73<sup>2</sup>)</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody id="eGFR_Table">
-                                            <tr>
-                                               
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                              <div class="container">                                
+                                <div role="tabpanel">
+                                  <!-- Nav tabs -->
+                                  <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#eGFR_History" aria-controls="eGFR_History" role="tab" data-toggle="tab">eGFR</a></li>
+                                    <li role="presentation"><a href="#IV_History" aria-controls="IV_History" role="tab" data-toggle="tab">Intravenouse Infusion Rate</a></li>
+                                    <li role="presentation"><a href="#anion_History" aria-controls="anion_History" role="tab" data-toggle="tab">Anion Gap</a></li>
+                                    <li role="presentation"><a href="#BSA_History" aria-controls="BSA_History" role="tab" data-toggle="tab">BSA</a></li>
+                                    <li role="presentation"><a href="#BMI_History" aria-controls="BMI_History" role="tab" data-toggle="tab">BMI</a></li>
+                                  </ul>
+
+                                  <!-- Tab panes -->
+                                  <div class="tab-content">
+
+                                    <div role="tabpanel" class="tab-pane active"  id="eGFR_History">
+                                      <div class="panel-body">
+                                        <div class="row">
+                                          <h3 class="text" style="text-align: center;">eGFR</h3>
+                                          <table class="table table-striped">
+                                              <thead>
+                                                <tr>
+                                                  <th>#</th>
+                                                  <th>sCr (mg/dL)</th>
+                                                  <th>Age (years)</th>
+                                                  <th>Sex</th>
+                                                  <th>African</th>
+                                                  <th>eGFR (mL/min/1.73<sup>2</sup>)</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody id="eGFR_Table">
+                                                <tr></tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="IV_History">
+                                      <div class="panel-body">
+                                        <div class="row">
+                                          <h3 class="text" style="text-align: center;">Intravenous Infusion Rate</h3>
+                                          <table class="table table-striped">
+                                              <thead>
+                                                <tr>
+                                                  <th>#</th>
+                                                  <th>Dose (mg/hr)</th>
+                                                  <th>Total Dose in Solution (mg)</th>
+                                                  <th>Total Volume (mL)</th>                                           
+                                                  <th>Infusion Rate (mL/hr)</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody id="IV_Table">
+                                                <tr></tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="anion_History">
+                                      <div class="panel-body">
+                                        <div class="row">
+                                            <h3 class="text" style="text-align: center;">Anion Gap</h3>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                  <tr>
+                                                    <th>#</th>
+                                                    <th>Na (mEq/L)</th>
+                                                    <th>Cl (mEq/L)</th>
+                                                    <th>Bicarb (mEq/L)</th>                                           
+                                                    <th>Anion Gap (mEq/L)</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="anion_Table">
+                                                    <tr></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="BSA_History">
+                                      <div class="panel-body">
+                                        <div class="row">
+                                            <h3 class="text" style="text-align: center;">BSA</h3>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                  <tr>
+                                                    <th>#</th>
+                                                    <th>Weight (kg)</th>
+                                                    <th>Height (cm)</th>                                          
+                                                    <th>BSA (m<sup>2</sup>)</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="BSA_Table">
+                                                    <tr></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="BMI_History">
+                                      <div class="panel-body">
+                                        <div class="row">
+                                            <h3 class="text" style="text-align: center;">BMI</h3>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                  <tr>
+                                                    <th>#</th>
+                                                    <th>Weight (kg)</th>
+                                                    <th>Height (cm)</th>                                          
+                                                    <th>BMI</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="BMI_Table">
+                                                    <tr></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
                                 </div>
-                                <div class="row" id="IV_History">
-                                    <h3 class="text" style="text-align: center;">Intravenous Infusion Rate</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>Dose (mg/hr)</th>
-                                            <th>Total Dose in Solution (mg)</th>
-                                            <th>Total Volume (mL)</th>                                           
-                                            <th>Infusion Rate (mL/hr)</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody id="IV_Table">
-                                            <tr></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                                <div class="row" id="anion_History">
-                                    <h3 class="text" style="text-align: center;">Anion Gap</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>Na (mEq/L)</th>
-                                            <th>Cl (mEq/L)</th>
-                                            <th>Bicarb (mEq/L)</th>                                           
-                                            <th>Anion Gap (mEq/L)</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody id="anion_Table">
-                                            <tr></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                                <div class="row" id="BSA_History">
-                                    <h3 class="text" style="text-align: center;">BSA</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>Weight (kg)</th>
-                                            <th>Height (cm)</th>                                          
-                                            <th>BSA (m<sup>2</sup>)</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody id="BSA_Table">
-                                            <tr></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                                <div class="row" id="BMI_History">
-                                    <h3 class="text" style="text-align: center;">BMI</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>Weight (kg)</th>
-                                            <th>Height (cm)</th>                                          
-                                            <th>BMI</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody id="BMI_Table">
-                                            <tr></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                            </div>                            
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </div>
+                    </div>                                
+                   
                     <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-md">
                             <div class="modal-content">
@@ -387,9 +432,9 @@
                 <script type="text/javascript" src="<c:url value="js/bootstrap.min.js"/>"></script>
                 <script type="text/javascript">
                     $(document).ready(function(){
+                        fetchData();
                         var $menu="";
                         var form1="";
-                        var $result="";
                         $("li").click(function(){
                              $menu = $(this).attr("id");
                              form1 = $menu.substring(2);
@@ -479,6 +524,24 @@
                         $("#anion").hide();
                         $("#BSA").hide();
                         $("#BMI").hide();
+                    };
+                    
+                    function fetchData (){
+                        var form1 = [ "eGFR", "IV","anion" , "BSA", "BMI" ];
+                        for ( var i = 0, l = form1.length; i < l; i++ ) {
+                           var url = "./insertRecordServlet";
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: $("form","#"+form1[i]).serialize(),
+                                success: function(data){
+                                    $.each(data, function( index, value ) {
+                                        alert(value);
+                                        $("#"+form1[i]+"_Table tr:last").after("<tr>" + value + "</tr>");
+                                    });                                
+                                }
+                            });
+                        }                       
                     };
                 </script>
             </c:when>

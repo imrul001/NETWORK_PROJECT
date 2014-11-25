@@ -4,23 +4,16 @@
  */
 package com.medicalCalculator.database.operation;
 
-import com.google.gson.Gson;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-/**
- *
- * @author imrul
- */
 public class ManageeGFR {
 
     private SessionFactory factory;

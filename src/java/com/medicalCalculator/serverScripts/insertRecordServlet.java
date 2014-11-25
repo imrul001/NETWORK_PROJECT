@@ -111,13 +111,6 @@ public class insertRecordServlet extends HttpServlet {
                     userid = manageBSA.addBSA(email, wt, ht,result);
                      write(response,manageBSA.listResult(email),userid);      
                 }
-                
-//                if(userid != null && userid !=0){
-//                    out.println("200".toString());
-//                    
-//                }else{
-//                    out.println("500".toString());
-//                }
             } finally {
                 out.close();
             }
@@ -165,14 +158,14 @@ public class insertRecordServlet extends HttpServlet {
     }// </editor-fold>
     
     private void write(HttpServletResponse response, List results,Integer userId) throws IOException {
-        if(userId !=null){
+//        if(userId !=null){
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(new Gson().toJson(results)); //this is how simple GSON works
-        }else{
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("500".toString());
-        }
+//        }else{
+//            response.setContentType("text/html;charset=UTF-8");
+//            response.getWriter().println("500".toString());
+//        }
   
     }
 }
