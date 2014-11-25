@@ -310,7 +310,7 @@
                                         }
                                     })
                                 }else{
-                                    alert("All Fields are required" + form1);
+                                    alert("All Fields are required");
                                 }
                                 return false;
                             });
