@@ -96,7 +96,7 @@
                                                     <div class="form-group">
                                                         <div class="col-md-4 col-md-offset-4">
                                                             <span class="input-group-addon" >
-                                                                <input type="checkbox"> African-American</input>
+                                                                <input type="checkbox" name="black" value="YES"> African-American</input>
                                                                 <input id="method" name="method" type="hidden" value="eGFR">
                                                             </span>    									
                                                         </div>
@@ -256,11 +256,11 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row well" >
-                                        <div class="col-md-2 inputLabel" style="font-size: 18px;">Input</div>
+                                        <div class="col-md-2 inputLabel" style="font-size: 18px;">Input data</div>
                                         <div class="col-md-10" id="input" style="font-size: 20px; color: green"></div>
                                     </div>
                                     <div class="row well">
-                                        <div class="col-md-3 inputLabel" style="font-size: 18px;">Output</div>
+                                        <div class="col-md-3 inputLabel" style="font-size: 18px;">Result</div>
                                         <div class="col-md-9" id="output" style="font-size: 22px; font-weight: bold; color: red;" ></div>
                                     </div>
                                 </div>
@@ -277,16 +277,26 @@
                 <script type="text/javascript" src="<c:url value="js/bootstrap.min.js"/>"></script>
                 <script type="text/javascript">
                     $(document).ready(function(){
+                        var $menu="";
+                        var form1="";
                         $("li").click(function(){
-                            var $menu = $(this).attr("id");
-                            var form1 = $menu.substring(2);
+                             $menu = $(this).attr("id");
+                             form1 = $menu.substring(2);
                             hideAll();
                             $("#allForm").show();
                             $("#"+form1).show(1000);
                             $("#menuTitle").text($(this).text());
                             $("#formButton").show();
+//                            resetAllExcept(form1);
+
+                            $("#clear").on("click",function(){
+                                resetForm(form1)
+                            })
+                        });
+                        
                             $("#calc").on("click", function(){
-                                if(!isBlackInput(form1)){
+                                
+                                if(!isBlankInput(form1)){
                                     var url = "./CalculationServlet";
                                     $.ajax({
                                         type: "POST",
@@ -304,14 +314,10 @@
                                 }
                                 return false;
                             });
-                            $("#clear").on("click",function(){
-                                resetForm(form1)
-                            })
-                        });
                     });
-                    function isBlackInput(id){
+                    function isBlankInput(id){
                         var flag = false;
-                        $("input","#"+id).each(function(){
+                        $(":text","#"+id).each(function(){
                             if($(this).val()==""){
                                 flag = true;
                             }
@@ -321,12 +327,15 @@
                         }
                     }
                     function resetForm(id){
+                        
                         $("input","#"+id).each(function(){
                             if($(this).val()!=""){
                                 $(this).val("");
                             }
                         })
+                        $("input[name='method']", "#"+id).val(id);
                     }
+
                     function hideAll (){
                         $("#eGFR").hide();
                         $("#IV").hide();
