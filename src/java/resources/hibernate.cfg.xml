@@ -12,19 +12,24 @@
         </property>
 
    <!-- Assume test is the database name -->
-<!--   <property name="hibernate.connection.url">jdbc:mysql://localhost/test</property>
+   <property name="hibernate.connection.url">jdbc:mysql://localhost/test</property>
    <property name="hibernate.connection.username">root</property>
-   <property name="hibernate.connection.password">123imrul</property>-->
+   <property name="hibernate.connection.password"></property>
    
 <!--   <property name="hibernate.connection.url">jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/tomcat6</property>-->
-        <property name="hibernate.connection.url">jdbc:mysql://127.7.206.130:3306/test</property>
+<!--        <property name="hibernate.connection.url">jdbc:mysql://127.7.206.130:3306/test</property>
         <property name="hibernate.connection.username">adminMrDTQ4V</property>
-        <property name="hibernate.connection.password">BegsmHBFKFpp</property>
+        <property name="hibernate.connection.password">BegsmHBFKFpp</property>-->
    
 
    <!-- List of XML mapping files -->
 <!--   <mapping resource="Employee.hbm.xml"/>-->
         <mapping resource="users.hbm.xml"/>
+        <mapping resource="eGFR.hbm.xml"/>
+        <mapping resource="IV.hbm.xml"/>
+        <mapping resource="anion.hbm.xml"/>
+        <mapping resource="bmi.hbm.xml"/>
+        <mapping resource="bsa.hbm.xml"/>
 <!--mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/-->
 <!--Root User: adminMrDTQ4V
    Root Password: BegsmHBFKFpp

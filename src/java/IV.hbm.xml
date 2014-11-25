@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="com.medicalCalculator.database.operation.IV" table="iv">
+      <meta attribute="class-description">
+         This class contains IV record details. 
+      </meta>
+      <id name="id" type="int" column="ID">
+         <generator class="native"/>
+      </id>
+      <property name="email" column="email" type="string"/>
+      <property name="dose" column="dose" type="double"/>
+      <property name="mg" column="mg" type="double"/>
+      <property name="ml" column="ml" type="double"/>
+      <property name="result" column="result" type="double"/>
+   </class>
+</hibernate-mapping>

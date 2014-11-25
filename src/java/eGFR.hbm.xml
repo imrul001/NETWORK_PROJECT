@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="com.medicalCalculator.database.operation.eGFR" table="egfr">
+      <meta attribute="class-description">
+         This class contains eGFR record details. 
+      </meta>
+      <id name="id" type="int" column="ID">
+         <generator class="native"/>
+      </id>
+      <property name="email" column="email" type="string"/>
+      <property name="sCr" column="sCr" type="double"/>
+      <property name="age" column="age" type="double"/>
+      <property name="sex" column="sex" type="int"/>
+      <property name="black" column="black" type="boolean"/>
+      <property name="result" column="result" type="double"/>
+   </class>
+</hibernate-mapping>
