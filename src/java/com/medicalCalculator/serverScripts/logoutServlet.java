@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +21,8 @@ import javax.servlet.http.HttpSession;
 public class logoutServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -37,6 +37,15 @@ public class logoutServlet extends HttpServlet {
         try {
             if (session != null) {
                 session.invalidate();
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (int i = 0; i < cookies.length; i++) {
+                        cookies[i].setValue("");
+                        cookies[i].setPath("/");
+                        cookies[i].setMaxAge(0);
+                        response.addCookie(cookies[i]);
+                    }
+                }
             }
             response.sendRedirect("/MedicalCalculator");
         } finally {
@@ -46,8 +55,7 @@ public class logoutServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -61,8 +69,7 @@ public class logoutServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

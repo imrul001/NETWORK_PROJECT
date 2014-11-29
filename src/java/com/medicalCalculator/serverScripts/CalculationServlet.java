@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +43,16 @@ public class CalculationServlet extends HttpServlet {
 //        double wt = 0.0;
 //        double ht = 0.0;
         double result = 0.0;
+        
+        String cookie_name = null;
+        String cookie_value = null;
+        Cookie[] cookies = request.getCookies();
+        for(Cookie c : cookies){
+            if(c.getName().equalsIgnoreCase("cookie_email")){
+                cookie_name = c.getName();
+                cookie_value = c.getValue();
+            }
+        }
 
 //        String unit = "";
         resultObject object = new resultObject();
@@ -134,8 +145,7 @@ public class CalculationServlet extends HttpServlet {
         }
         
         try {
-            if (session.getAttribute("email") != null) {
-                
+            if (session.getAttribute("email") != null && cookie_name!=null && cookie_value != null) {
                 object.setOutput(result +" ");
                 map.put("title",object.getTitle());
                 map.put("input", object.getInput());
@@ -144,7 +154,7 @@ public class CalculationServlet extends HttpServlet {
                 write(response, map);
 
             } else {
-                out.println("sessionFailed");
+                out.println("503");
             }
         } finally {
             out.close();

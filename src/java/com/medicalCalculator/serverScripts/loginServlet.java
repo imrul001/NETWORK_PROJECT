@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,9 @@ public class loginServlet extends HttpServlet {
                 out.println("great");
                 HttpSession session = request.getSession();
                 session.setAttribute("email", email);
+                Cookie cookie = new Cookie("cookie_email", email);
+//                cookie.setMaxAge(120);
+                response.addCookie(cookie);
                 RequestDispatcher rd = request.getRequestDispatcher("userCalculationArea");
                 rd.forward(request, response);
 
