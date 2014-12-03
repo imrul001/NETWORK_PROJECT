@@ -12,14 +12,14 @@
         </property>
 
    <!-- Assume test is the database name -->
-   <property name="hibernate.connection.url">jdbc:mysql://localhost/test</property>
+<!--    <property name="hibernate.connection.url">jdbc:mysql://localhost/test</property>
    <property name="hibernate.connection.username">root</property>
-   <property name="hibernate.connection.password">123imrul</property>
+   <property name="hibernate.connection.password">123imrul</property> -->
    
 <!--   <property name="hibernate.connection.url">jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/tomcat6</property>-->
-<!--        <property name="hibernate.connection.url">jdbc:mysql://127.7.206.130:3306/test</property>
+        <property name="hibernate.connection.url">jdbc:mysql://127.7.206.130:3306/test</property>
         <property name="hibernate.connection.username">adminMrDTQ4V</property>
-        <property name="hibernate.connection.password">BegsmHBFKFpp</property>-->
+        <property name="hibernate.connection.password">BegsmHBFKFpp</property>
    
 
    <!-- List of XML mapping files -->
