@@ -39,7 +39,7 @@
                             </form>
 
                             <form class="navbar-form navbar-right" id="logoutForm" role="form" method="POST" action="./logoutServlet">
-                                <button type="submit" disabled="disabled" class="btn btn-default">${SessionEmail}</button>
+                                <button  type="submit" disabled="disabled" class="btn btn-default">${SessionEmail}</button>
                                 <button type="submit" class="btn btn-danger" id="logoutBtn">Log out</button>
                             </form>
                         </div><!--/.nav-collapse -->
@@ -434,7 +434,11 @@
             <script type="text/javascript">
                 $(document).ready(function () {
                     var idleTime = 0;
-                    fetchData();
+                    var form1 = ["eGFR", "IV", "anion", "BSA", "BMI"];
+                    for (i = 0; i < form1.length; i++) {
+                        fetchData(form1[i]);
+                    }
+
                     logoutWhenSessionExpires();
                     var $menu = "";
                     var form1 = "";
@@ -495,6 +499,8 @@
                                     if (data.toString() == 500) {
                                         alert("Save Unsuccessful");
                                     } else {
+                                        $("#" + form1 + "_Table tr").remove();
+                                        $("#" + form1 + "_Table").html("<tr></tr>");
                                         alert("Save Successful");
                                         $.each(data, function (index, value) {
                                             $("#" + form1 + "_Table tr:last").after("<tr>" + value + "</tr>");
@@ -510,7 +516,6 @@
                 });
 
                 function logoutAction() {
-                    alert("Session Expired");
                     $.removeCookie('cookie_email', {path: '/MedicalCalculator'});
                     $("#logoutForm").submit();
                 }
@@ -546,21 +551,20 @@
                 }
                 ;
 
-                function fetchData() {
-                    var form1 = ["eGFR", "IV", "anion", "BSA", "BMI"];
-                    for (var i = 0, l = form1.length; i < l; i++) {
-                        var url = "./insertRecordServlet";
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: $("form", "#" + form1[i]).serialize(),
-                            success: function (data) {
-                                $.each(data, function (index, value) {
-                                    $("#" + form1[i] + "_Table tr:last").after("<tr>" + value + "</tr>");
-                                });
-                            }
-                        });
-                    }
+                function fetchData(method) {
+//                    alert(method);
+                    var url = "./fetchServlet";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: "email=" + "${SessionEmail}" + "&method=" + method,
+                        success: function (data) {
+//                                alert(method);
+                            $.each(data, function (index, value) {
+                                $("#" + method + "_Table tr:last").after("<tr>" + value + "</tr>");
+                            });
+                        }
+                    });
                 }
                 ;
 
@@ -578,6 +582,7 @@
                     function timerIncrement() {
                         idleTime = idleTime + 1;
                         if (idleTime > 2) { // 10 minutes
+                            alert("Session Expired");
                             logoutAction();
                         }
                     }

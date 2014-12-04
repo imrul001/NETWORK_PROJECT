@@ -7,6 +7,8 @@ package com.medicalCalculator.serverScripts;
 import com.google.gson.Gson;
 import com.medicalCalculation.calculations.calculation;
 import com.medicalCalculation.calculations.resultObject;
+import com.medicalCalculation.validation.cookieUtilClass;
+import com.medicalCalculation.validation.myCookies;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -25,9 +27,8 @@ import javax.servlet.http.HttpSession;
 public class CalculationServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -40,24 +41,12 @@ public class CalculationServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         String method = request.getParameter("method").trim();
-//        double wt = 0.0;
-//        double ht = 0.0;
+        myCookies cookie = cookieUtilClass.getMyCookies(request);
         double result = 0.0;
-        
-        String cookie_name = null;
-        String cookie_value = null;
-        Cookie[] cookies = request.getCookies();
-        for(Cookie c : cookies){
-            if(c.getName().equalsIgnoreCase("cookie_email")){
-                cookie_name = c.getName();
-                cookie_value = c.getValue();
-            }
-        }
-
 //        String unit = "";
         resultObject object = new resultObject();
         Map map = new HashMap();
-       
+
         if (method.equalsIgnoreCase("BMI")) {
             double wt = Double.valueOf(request.getParameter("wt"));
             double ht = Double.valueOf(request.getParameter("ht"));
@@ -65,7 +54,7 @@ public class CalculationServlet extends HttpServlet {
             object.setInput("Weight = " + wt + " kg <br> Height = " + ht + " cm");
             object.setUnit("");
             result = calculation.calBMI(wt, ht);
-        } 
+        }
 
         if (method.equalsIgnoreCase("BSA")) {
             double wt = Double.valueOf(request.getParameter("wt"));
@@ -75,7 +64,7 @@ public class CalculationServlet extends HttpServlet {
             object.setUnit("m<sup>2</sup>");
             result = calculation.calBSA(wt, ht);
         }
-        
+
         if (method.equalsIgnoreCase("anion")) {
             double Na;
             double Cl;
@@ -84,13 +73,13 @@ public class CalculationServlet extends HttpServlet {
             Cl = Double.valueOf(request.getParameter("Chloride"));
             bicarb = Double.valueOf(request.getParameter("Bicarb"));
             object.setTitle("Anion-Gap");
-            object.setInput("Na = " + Na + " mEq/L" +"<br>"
-                            + "Cl = " + Cl + " mEq/L" +"<br>"
-                            + "Bicarb = " + bicarb + " mEq/L");
+            object.setInput("Na = " + Na + " mEq/L" + "<br>"
+                    + "Cl = " + Cl + " mEq/L" + "<br>"
+                    + "Bicarb = " + bicarb + " mEq/L");
             object.setUnit("mEq/L");
-            result = calculation.calAnionGap(Na,Cl,bicarb);
+            result = calculation.calAnionGap(Na, Cl, bicarb);
         }
-        
+
         if (method.equalsIgnoreCase("IV")) {
             double dose;
             double mg;
@@ -99,55 +88,53 @@ public class CalculationServlet extends HttpServlet {
             mg = Double.valueOf(request.getParameter("mg"));
             mL = Double.valueOf(request.getParameter("ml"));
             object.setTitle("Intravenous Infusion Rate");
-            object.setInput("Dose = " + dose + " mg/hr" +"<br>"
-                            + "Drug in solution = " + mg + " mg" +"<br>"
-                            + "Total Volume = " + mL + " mL");
+            object.setInput("Dose = " + dose + " mg/hr" + "<br>"
+                    + "Drug in solution = " + mg + " mg" + "<br>"
+                    + "Total Volume = " + mL + " mL");
             object.setUnit("mL/hr");
-            result = calculation.calIV(dose,mg,mL);
+            result = calculation.calIV(dose, mg, mL);
         }
-        
+
         if (method.equalsIgnoreCase("eGFR")) {
             double sCr;
             double age;
             int sex;
-            String black="";
-            boolean bBlack=false;
+            String black = "";
+            boolean bBlack = false;
             String sSex = "";
-            String sBlack ="";
-           
-                
+            String sBlack = "";
+
             sCr = Double.valueOf(request.getParameter("sCr"));
             age = Double.valueOf(request.getParameter("age"));
             sex = Integer.valueOf(request.getParameter("sex"));
             black = String.valueOf(request.getParameter("black"));
-            
-            if("NO".equals(black)){
-                bBlack=true;
-                sBlack="African-American";
-            } else{
-                bBlack=false;
+
+            if ("NO".equals(black)) {
+                bBlack = true;
+                sBlack = "African-American";
+            } else {
+                bBlack = false;
             }
 
-            
-            if(sex==1){
-                sSex="male";
-            }else{
-                sSex ="female";
+            if (sex == 1) {
+                sSex = "male";
+            } else {
+                sSex = "female";
             }
 
             object.setTitle("estimated Glomerular Filtration Rate: eGFR");
-            object.setInput("serum creatinine = " + sCr + " mg/dL" +"<br>"
-                            + "age = " + age + " years" +"<br>"
-                            + "sex = " + sSex +"<br>"
-                            + sBlack);
+            object.setInput("serum creatinine = " + sCr + " mg/dL" + "<br>"
+                    + "age = " + age + " years" + "<br>"
+                    + "sex = " + sSex + "<br>"
+                    + sBlack);
             object.setUnit("mL/min/1.73<sup>2</sup>");
-            result = calculation.calGFR(sCr,age,sex,bBlack);
+            result = calculation.calGFR(sCr, age, sex, bBlack);
         }
-        
+
         try {
-            if (session.getAttribute("email") != null && cookie_name!=null && cookie_value != null) {
-                object.setOutput(result +" ");
-                map.put("title",object.getTitle());
+            if (session.getAttribute("email") != null && cookie.getCookie_name() != null && cookie.getCookie_value() != null) {
+                object.setOutput(result + " ");
+                map.put("title", object.getTitle());
                 map.put("input", object.getInput());
                 map.put("output", object.getOutput());
                 map.put("unit", object.getUnit());
@@ -163,8 +150,7 @@ public class CalculationServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -178,8 +164,7 @@ public class CalculationServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

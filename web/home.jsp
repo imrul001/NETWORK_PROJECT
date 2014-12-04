@@ -435,10 +435,10 @@
                 $(document).ready(function () {
                     var idleTime = 0;
                     var form1 = ["eGFR", "IV", "anion", "BSA", "BMI"];
-                    for (i = 0; i < form1.length; i++) { 
+                    for (i = 0; i < form1.length; i++) {
                         fetchData(form1[i]);
                     }
-                    
+
                     logoutWhenSessionExpires();
                     var $menu = "";
                     var form1 = "";
@@ -466,7 +466,6 @@
                                 type: "POST",
                                 url: url,
                                 data: $("form", "#" + form1).serialize(),
-                                
                                 success: function (data) {
                                     console.log(data);
                                     if (data != 503) {
@@ -517,7 +516,6 @@
                 });
 
                 function logoutAction() {
-                    alert("Session Expired");
                     $.removeCookie('cookie_email', {path: '/MedicalCalculator'});
                     $("#logoutForm").submit();
                 }
@@ -553,21 +551,22 @@
                 }
                 ;
 
-                function fetchData(method) {  
+                function fetchData(method) {
 //                    alert(method);
-                     var url = "./fetchServlet";
-                        $.ajax({
-                            type: "POST",
-                            url: url,
-                            data: "email="+"${SessionEmail}" + "&method=" + method,
-                            success: function (data) {
+                    var url = "./fetchServlet";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: "email=" + "${SessionEmail}" + "&method=" + method,
+                        success: function (data) {
 //                                alert(method);
-                                $.each(data, function (index, value) {
-                                    $("#" + method + "_Table tr:last").after("<tr>" + value + "</tr>");
-                                });
-                            }
-                        });  
-                };
+                            $.each(data, function (index, value) {
+                                $("#" + method + "_Table tr:last").after("<tr>" + value + "</tr>");
+                            });
+                        }
+                    });
+                }
+                ;
 
                 function logoutWhenSessionExpires() {
                     var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
@@ -583,6 +582,7 @@
                     function timerIncrement() {
                         idleTime = idleTime + 1;
                         if (idleTime > 2) { // 10 minutes
+                            alert("Session Expired");
                             logoutAction();
                         }
                     }
