@@ -51,10 +51,6 @@ public class insertRecordServlet extends HttpServlet {
         String method = request.getParameter("method").trim();
         String email = request.getParameter("email");
         Integer userid= null;
-        Map map = new HashMap();
-        resultObject object = new resultObject();
-//        Map map = new HashMap();
-        
         if (session.getAttribute("email") != null) {
             try {
                 if (method.equalsIgnoreCase("eGFR")) {

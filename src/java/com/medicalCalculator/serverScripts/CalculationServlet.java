@@ -43,7 +43,6 @@ public class CalculationServlet extends HttpServlet {
         String method = request.getParameter("method").trim();
         myCookies cookie = cookieUtilClass.getMyCookies(request);
         double result = 0.0;
-//        String unit = "";
         resultObject object = new resultObject();
         Map map = new HashMap();
 

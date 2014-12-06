@@ -19,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author imrul
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+@WebServlet(name = "updateServlet", urlPatterns = {"/updateServlet"})
+public class updateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP

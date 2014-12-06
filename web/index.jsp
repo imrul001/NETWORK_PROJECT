@@ -172,6 +172,7 @@
             $("#btn-login").on("click", function(){
                 $('.modal-body').html("");
                 $('#myModalLabel').html("");
+                
                 var email = $("#login-username").val().trim();
                 var pass = $("#login-password").val().trim();
                 //                alert(email);
@@ -180,13 +181,16 @@
                     $('.modal').modal('show');
                     $('#myModalLabel').html("Login Failed");
                     $('.modal-body').html("<p class='errorMsg'>Invalid Email or Password.</p>");
+                    
                     return false;
                 }else{
                     var url = "./loginServlet";
+                    
                     $.ajax({
                         type: "POST",
                         url: url,
                         data: $('#loginform').serialize(),
+                        
                         success:function(data){
                             if(data.trim() == 503){
                                 alert("Invalid Username Password");

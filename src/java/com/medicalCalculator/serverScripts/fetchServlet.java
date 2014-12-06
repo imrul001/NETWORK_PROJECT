@@ -7,8 +7,6 @@ package com.medicalCalculator.serverScripts;
 import com.google.gson.Gson;
 import com.medicalCalculation.calculations.calculation;
 import com.medicalCalculation.calculations.resultObject;
-import com.medicalCalculation.validation.cookieUtilClass;
-import com.medicalCalculation.validation.myCookies;
 import com.medicalCalculator.database.operation.ManageAnion;
 import com.medicalCalculator.database.operation.ManageBMI;
 import com.medicalCalculator.database.operation.ManageBSA;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,9 +49,8 @@ public class fetchServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String method = request.getParameter("method").trim();
         String email = request.getParameter("email");
-        myCookies cookie = cookieUtilClass.getMyCookies(request);
 
-        if (session.getAttribute("email") != null && cookie.getCookie_name()!=null && cookie.getCookie_value() != null) {
+        if (session.getAttribute("email") != null) {
             try {
                 if (method.equalsIgnoreCase("eGFR")) {
                     ManageeGFR fetchData = new ManageeGFR();

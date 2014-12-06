@@ -445,7 +445,7 @@
                     $("li").click(function () {
                         $menu = $(this).attr("id");
                         form1 = $menu.substring(2);
-                        $result = ""
+                        
                         hideAll();
                         $("#allForm").show();
                         $("#" + form1).show(1000);
