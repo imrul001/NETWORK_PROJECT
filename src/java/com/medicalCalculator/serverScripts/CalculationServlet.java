@@ -129,9 +129,9 @@ public class CalculationServlet extends HttpServlet {
             object.setUnit("mL/min/1.73<sup>2</sup>");
             result = calculation.calGFR(sCr, age, sex, bBlack);
         }
-
+        String sessionEmail = (String) session.getAttribute("email");
         try {
-            if (session.getAttribute("email") != null && cookie.getCookie_name() != null && cookie.getCookie_value() != null) {
+            if (session.getAttribute("email") != null && cookie.getCookie_name() != null && cookie.getCookie_value() != null && sessionEmail.equalsIgnoreCase(cookie.getCookie_value())) {
                 object.setOutput(result + " ");
                 map.put("title", object.getTitle());
                 map.put("input", object.getInput());

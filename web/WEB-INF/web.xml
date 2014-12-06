@@ -24,6 +24,14 @@
         <servlet-name>CalculationServlet</servlet-name>
         <servlet-class>com.medicalCalculator.serverScripts.CalculationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>insertRecordServlet</servlet-name>
+        <servlet-class>com.medicalCalculator.serverScripts.insertRecordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>insertRecordServlet</servlet-name>
+        <url-pattern>/insertRecordServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>

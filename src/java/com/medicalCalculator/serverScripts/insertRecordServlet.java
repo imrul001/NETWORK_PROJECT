@@ -7,6 +7,8 @@ package com.medicalCalculator.serverScripts;
 import com.google.gson.Gson;
 import com.medicalCalculation.calculations.calculation;
 import com.medicalCalculation.calculations.resultObject;
+import com.medicalCalculation.validation.cookieUtilClass;
+import com.medicalCalculation.validation.myCookies;
 import com.medicalCalculator.database.operation.ManageAnion;
 import com.medicalCalculator.database.operation.ManageBMI;
 import com.medicalCalculator.database.operation.ManageBSA;
@@ -50,8 +52,10 @@ public class insertRecordServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String method = request.getParameter("method").trim();
         String email = request.getParameter("email");
+        myCookies cookie = cookieUtilClass.getMyCookies(request);
+        String sessionEmail = (String) session.getAttribute("email");
         Integer userid= null;
-        if (session.getAttribute("email") != null) {
+        if (session.getAttribute("email") != null && sessionEmail.equalsIgnoreCase(cookie.getCookie_value())) {
             try {
                 if (method.equalsIgnoreCase("eGFR")) {
                     double sCr = Double.valueOf(request.getParameter("sCr"));
